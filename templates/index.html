@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sensor Data</title>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -16,34 +17,36 @@
             border-radius: 5px;
             display: inline-block;
             text-align: left;
+            font-size: 20px;
         }
     </style>
 </head>
 <body>
-    <h1>Latest Sensor Data</h1>
+    <h1>Sensor Data</h1>
     <pre id="sensorData">Waiting for data...</pre>
 
     <script>
-        // ✅ Fetch Data from Flask API Every 5 Seconds
-        // ✅ Fetch Latest Distance from Flask API
-async function fetchFlaskData() {
-    try {
-        const response = await fetch("/get-data");  // Flask API
-        const data = await response.json();
-
-        console.log("Fetched Data:", data); // Debugging
-
-        if (data.distance) {
-            document.getElementById("sensorData").innerText = `Distance: ${data.distance} cm`;
-        } else {
-            document.getElementById("sensorData").innerText = "No data available";
+        async function fetchFlaskData() {
+            try {
+                const response = await fetch("/get-data");  // Flask endpoint
+                const data = await response.json();
+                
+                if (data.distance) {
+                    document.getElementById("sensorData").innerText = `Distance: ${data.distance} cm`;
+                } else {
+                    document.getElementById("sensorData").innerText = "No distance data available";
+                }
+            } catch (error) {
+                console.error("Error fetching from Flask:", error);
+                document.getElementById("sensorData").innerText = "Error fetching data";
+            }
         }
-    } catch (error) {
-        console.error("Error fetching from Flask:", error);
-        document.getElementById("sensorData").innerText = "Error fetching data";
-    }
-}
 
-   </script>
+        // ✅ Fetch from Flask every 5 seconds
+        setInterval(fetchFlaskData, 5000);
+
+        // ✅ Fetch data when page loads
+        fetchFlaskData();
+    </script>
 </body>
 </html>
