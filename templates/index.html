@@ -33,20 +33,20 @@
     <script>
         async function fetchFlaskData() {
             try {
-                const response = await fetch("/get-data");
+                const response = await fetch("/get-data");  // Flask endpoint
                 const data = await response.json();
     
-                // ✅ Loop through all sensors and update the correct dustbin row
-                Object.values(data).forEach(sensor => {
-                    const dustbinNo = sensor.dustbin_no;
+                // ✅ Loop through each dustbin in the response
+                Object.keys(data).forEach(dustbin_no => {
+                    const distance = data[dustbin_no].distance;
+                    const battery = data[dustbin_no].battery;
     
-                    // Find the table row with the matching dustbin number
-                    const row = document.querySelector(`tr[data-dustbin='${dustbinNo}']`);
+                    // ✅ Find the correct table row using dustbin_no
+                    let distanceCell = document.getElementById(`distance-${dustbin_no}`);
+                    let batteryCell = document.getElementById(`battery-${dustbin_no}`);
     
-                    if (row) {
-                        row.querySelector(".distance").innerText = `${sensor.distance} cm`;
-                        row.querySelector(".battery").innerText = `${sensor.battery}%`;
-                    }
+                    if (distanceCell) distanceCell.innerText = distance + " cm";
+                    if (batteryCell) batteryCell.innerText = battery + "%";
                 });
     
             } catch (error) {
@@ -54,12 +54,13 @@
             }
         }
     
-        // ✅ Fetch from Flask every 5 seconds
+        // ✅ Fetch data every 5 seconds
         setInterval(fetchFlaskData, 5000);
-    
-        // ✅ Fetch data when page loads
+        
+        // ✅ Fetch on page load
         fetchFlaskData();
     </script>
+    
     
 </head>
 <body>
@@ -71,18 +72,18 @@
         <table>
             <tr>
                 <th>Dustbin No.</th>
-                <th>Distance (cm)</th>
-                <th>Battery (%)</th>
+                <th>% Full</th>
+                <th>Battery</th>
             </tr>
-            <tr data-dustbin="32">
+            <tr>
                 <td>32</td>
-                <td class="distance">No data</td> 
-                <td class="battery">No data</td>
+                <td id="distance-32">No data</td>  <!-- ✅ ID changed -->
+                <td id="battery-32">No data</td>
             </tr>
-            <tr data-dustbin="45">
-                <td>45</td>
-                <td class="distance">No data</td> 
-                <td class="battery">No data</td>
+            <tr>
+                <td>30</td>
+                <td id="distance-30">No data</td>  <!-- ✅ ID changed -->
+                <td id="battery-30">No data</td>
             </tr>
         </table>
         

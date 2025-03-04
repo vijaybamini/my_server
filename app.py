@@ -24,25 +24,27 @@ def index():
 
 @app.route("/get-data")
 def get_data():
-    """Fetches the latest distance values from Firebase for both sensors."""
+    """Fetches the latest sensor values for each dustbin."""
     ref = db.reference("data")  # Reference to "data" node
     data = ref.get()
 
     if not data:
         return jsonify({"error": "No data found"}), 404  # Handle empty database
 
-    # ✅ Get the latest key (Firebase keys are timestamps, so get the last one)
-    latest_key = max(data.keys(), key=lambda k: k if k.startswith("-") else "")  # Ignore non-auto keys
-    latest_entry = data[latest_key]  # Get latest sensor data
+    latest_data = {}  # Store the latest entry per dustbin
 
-    # ✅ Extract sensor data
-    sensor1 = latest_entry.get("sensor1", {"distance": "No data", "battery": "No data"})
-    sensor2 = latest_entry.get("sensor2", {"distance": "No data", "battery": "No data"})
+    # ✅ Extract latest entry for each dustbin
+    for key in sorted(data.keys(), reverse=True):  # Sort keys to get latest first
+        entry = data[key]
+        dustbin_no = str(entry.get("dustbin_no", "Unknown"))
 
-    return jsonify({
-        "sensor1": sensor1,
-        "sensor2": sensor2
-    })  # Return latest sensors
+        if dustbin_no not in latest_data:  # Only take the first/latest entry
+            latest_data[dustbin_no] = {
+                "distance": entry.get("sensor1", entry.get("sensor2", {})).get("distance", "No data"),
+                "battery": entry.get("sensor1", entry.get("sensor2", {})).get("battery", "No data")
+            }
+
+    return jsonify(latest_data)  # Returns only the latest entry per dustbin
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
