@@ -24,7 +24,7 @@ def index():
 
 @app.route("/get-data")
 def get_data():
-    """Fetches the latest distance value from Firebase."""
+    """Fetches the latest distance values from Firebase for both sensors."""
     ref = db.reference("data")  # Reference to the "data" node
     data = ref.get()
 
@@ -33,9 +33,13 @@ def get_data():
 
     # ✅ Get the latest key (Firebase keys are unordered, so we get the last one)
     latest_key = max(data.keys())  
-    latest_distance = data[latest_key].get("distance", "No distance data")
+    latest_entry = data[latest_key]  # Get latest sensor data
 
-    return jsonify({"distance": latest_distance})  # Return only the latest distance
+    # ✅ Extract both sensor values
+    sensor1_distance = latest_entry.get("sensor1", "No data")
+    sensor2_distance = latest_entry.get("sensor2", "No data")
+
+    return jsonify({"sensor1": sensor1_distance, "sensor2": sensor2_distance})  # Return both sensors
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

@@ -3,50 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sensor Data</title>
+    <title>dustbin table</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="fetching.js"></script>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-        }
-        pre {
-            background: #f4f4f4;
-            padding: 10px;
-            border-radius: 5px;
-            display: inline-block;
-            text-align: left;
-            font-size: 20px;
-        }
-    </style>
 </head>
 <body>
-    <h1>Sensor Data</h1>
-    <pre id="sensorData">Waiting for data...</pre>
-
-    <script>
-        async function fetchFlaskData() {
-            try {
-                const response = await fetch("/get-data");  // Flask endpoint
-                const data = await response.json();
-                
-                if (data.distance) {
-                    document.getElementById("sensorData").innerText = `Distance: ${data.distance} cm`;
-                } else {
-                    document.getElementById("sensorData").innerText = "No distance data available";
-                }
-            } catch (error) {
-                console.error("Error fetching from Flask:", error);
-                document.getElementById("sensorData").innerText = "Error fetching data";
-            }
-        }
-
-        // ✅ Fetch from Flask every 5 seconds
-        setInterval(fetchFlaskData, 5000);
-
-        // ✅ Fetch data when page loads
-        fetchFlaskData();
-    </script>
+    <div class="horizontal">
+        <div class="box"> Data </div>
+        <div class="box">Maps</div>
+    </div>
+        <div><table>
+            <tr>
+                <th>Dustbin No.</th>
+                <th>% Full</th>
+                <th>Battery</th>
+            </tr>
+            <tr>
+                <td>32</td>
+                <td id="percent1">No data</td> <!-- ✅ Updated ID -->
+                <td id="sensor1">No data</td> 
+            </tr>
+            <tr>
+                <td>45</td>
+                <td id="percent2">No data</td> <!-- ✅ Updated ID -->
+                <td id="sensor2">No data</td>
+            </tr>
+        </table>
+        
+        </div>
 </body>
 </html>
