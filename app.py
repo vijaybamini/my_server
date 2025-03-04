@@ -6,7 +6,7 @@ import json
 
 app = Flask(__name__)
 
-# Load Firebase credentials from Render environment variable
+# Load Firebase credentials
 firebase_credentials = os.environ.get("FIREBASE_CREDENTIALS")
 
 if firebase_credentials:
@@ -20,26 +20,18 @@ else:
 
 @app.route("/")
 def index():
-    return render_template("index.html")  # Your HTML file
+    return render_template("index.html")
 
 @app.route("/get-data")
 def get_data():
-    """Fetches the latest distance values from Firebase for both sensors."""
-    ref = db.reference("data")  # Reference to the "data" node
+    """Fetches latest sensor values dynamically, including dustbin numbers."""
+    ref = db.reference("data")
     data = ref.get()
 
     if not data:
-        return jsonify({"error": "No data found"}), 404  # Handle empty database
+        return jsonify({"error": "No data found"}), 404
 
-    # ✅ Get the latest key (Firebase keys are unordered, so we get the last one)
-    latest_key = max(data.keys())  
-    latest_entry = data[latest_key]  # Get latest sensor data
-
-    # ✅ Extract both sensor values
-    sensor1_distance = latest_entry.get("sensor1", "No data")
-    sensor2_distance = latest_entry.get("sensor2", "No data")
-
-    return jsonify({"sensor1": sensor1_distance, "sensor2": sensor2_distance})  # Return both sensors
+    return jsonify(data)  # Returns all sensors dynamically
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
