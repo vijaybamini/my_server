@@ -3,68 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>dustbin table</title>
+    <title>Dustbin Table</title>
     <style>
-        .box{
+        .box {
             border: 2px solid black;
             display: flex;
-           width: 100px;
-           height: 30px;
-           justify-content: center;
-           align-items: center;
-           border-radius: 5px;
+            width: 100px;
+            height: 30px;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
         }
-         .horizontal{
+        .horizontal {
             display: flex;
             gap: 20px;
             flex-direction: row;
-        
-         }
-         th,td{
+        }
+        th, td {
             padding: 10px 20px;
-            
-         }
-        body{
-           margin: 10px;
         }
-        table{
-           margin: 10px;
+        body {
+            margin: 10px;
         }
-        </style>
-       <script>
-        
-    async function fetchFlaskData() {
-        try {
-            const response = await fetch("/get-data");  // Flask endpoint
-            const data = await response.json();
-            
-            if (data.distance) {
-                document.getElementById("sensorData").innerText = `Distance: ${data.distance} cm`;
-            } else {
-                document.getElementById("sensorData").innerText = "No distance data available";
-            }
-        } catch (error) {
-            console.error("Error fetching from Flask:", error);
-            document.getElementById("sensorData").innerText = "Error fetching data";
+        table {
+            margin: 10px;
         }
-    }
+    </style>
     
-    // ✅ Fetch from Flask every 5 seconds
-    setInterval(fetchFlaskData, 5000);
-    
-    // ✅ Fetch data when page loads
-    fetchFlaskData();
-    
-       </script>
-    
+    <script>
+    window.onload = function () {
+        async function fetchFlaskData() {
+            try {
+                const response = await fetch("/get-data");  // Flask endpoint
+                const data = await response.json();
+                console.log("Fetched Data:", data); // Debugging output
 
+                // ✅ Update Sensor 1 Data
+                if (data.sensor1) {
+                    document.getElementById("percent1").innerText = `${data.sensor1.distance} cm`;
+                    document.getElementById("sensor1").innerText = `${data.sensor1.battery}%`;
+                } else {
+                    document.getElementById("percent1").innerText = "No data";
+                    document.getElementById("sensor1").innerText = "No data";
+                }
+
+                // ✅ Update Sensor 2 Data
+                if (data.sensor2) {
+                    document.getElementById("percent2").innerText = `${data.sensor2.distance} cm`;
+                    document.getElementById("sensor2").innerText = `${data.sensor2.battery}%`;
+                } else {
+                    document.getElementById("percent2").innerText = "No data";
+                    document.getElementById("sensor2").innerText = "No data";
+                }
+
+            } catch (error) {
+                console.error("Error fetching from Flask:", error);
+                document.getElementById("percent1").innerText = "Error";
+                document.getElementById("sensor1").innerText = "Error";
+                document.getElementById("percent2").innerText = "Error";
+                document.getElementById("sensor2").innerText = "Error";
+            }
+        }
+
+        // ✅ Fetch data every 5 seconds
+        setInterval(fetchFlaskData, 5000);
+
+        // ✅ Fetch data when page loads
+        fetchFlaskData();
+    };
+    </script>
 </head>
 <body>
     <div class="horizontal">
         <div class="box"> Data </div>
-        <div class="box">Maps</div>
+        <div class="box"> Maps </div>
     </div>
-        <div><table>
+    <div>
+        <table>
             <tr>
                 <th>Dustbin No.</th>
                 <th>% Full</th>
@@ -72,16 +87,15 @@
             </tr>
             <tr>
                 <td>32</td>
-                <td id="percent1">No data</td> <!-- ✅ Updated ID -->
-                <td id="sensor1">No data</td> 
+                <td id="percent1">No data</td> <!-- ✅ Correct ID -->
+                <td id="sensor1">No data</td>   <!-- ✅ Correct ID -->
             </tr>
             <tr>
                 <td>45</td>
-                <td id="percent2">No data</td> <!-- ✅ Updated ID -->
-                <td id="sensor2">No data</td>
+                <td id="percent2">No data</td> <!-- ✅ Correct ID -->
+                <td id="sensor2">No data</td>   <!-- ✅ Correct ID -->
             </tr>
         </table>
-        
-        </div>
+    </div>
 </body>
 </html>
