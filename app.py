@@ -38,7 +38,6 @@ def get_data():
     # ✅ Format the response
     latest_data = {
         "dustbin_no": latest_entry.get("dustbin_no", "No data"),
-    
         "percentage": latest_entry.get("percentage", "No data")
     }
 
