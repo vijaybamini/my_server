@@ -24,27 +24,25 @@ def index():
 
 @app.route("/get-data")
 def get_data():
-    """Fetches the latest sensor values for each dustbin."""
+    """Fetches the latest sensor values."""
     ref = db.reference("data")  # Reference to "data" node
     data = ref.get()
 
     if not data:
         return jsonify({"error": "No data found"}), 404  # Handle empty database
 
-    latest_data = {}  # Store the latest entry per dustbin
+    # ✅ Get the latest timestamp (highest key)
+    latest_timestamp = sorted(data.keys(), reverse=True)[0]  # Get the latest entry
+    latest_entry = data[latest_timestamp]
 
-    # ✅ Extract latest entry for each dustbin
-    for key in sorted(data.keys(), reverse=True):  # Sort keys to get latest first
-        entry = data[key]
-        dustbin_no = str(entry.get("dustbin_no", "Unknown"))
+    # ✅ Format the response
+    latest_data = {
+        "distance_dry": latest_entry.get("distance_dry", "No data"),
+        "distance_wet": latest_entry.get("distance_wet", "No data"),
+        "battery": latest_entry.get("battery", "No data")
+    }
 
-        if dustbin_no not in latest_data:  # Only take the first/latest entry
-            latest_data[dustbin_no] = {
-                "distance": entry.get("sensor1", entry.get("sensor2", {})).get("distance", "No data"),
-                "battery": entry.get("sensor1", entry.get("sensor2", {})).get("battery", "No data")
-            }
-
-    return jsonify(latest_data)  # Returns only the latest entry per dustbin
+    return jsonify(latest_data)  # Return latest sensor data
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
