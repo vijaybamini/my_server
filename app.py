@@ -37,8 +37,8 @@ def get_data():
 
     # ✅ Format the response
     latest_data = {
-        "distance_dry": latest_entry.get("distance_dry", "No data"),
-        "distance_wet": latest_entry.get("distance_wet", "No data"),
+        "dustbin_no": latest_entry.get("dustbin_no", "No data"),
+        "distance": latest_entry.get("distance", "No data"),
         "battery": latest_entry.get("battery", "No data")
     }
 

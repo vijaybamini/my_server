@@ -74,8 +74,8 @@
                 const data = await response.json();
 
                 // ✅ Update table with latest values
-                document.getElementById("distance-dry").innerText = `${data.distance_dry} cm`;
-                document.getElementById("distance-wet").innerText = `${data.distance_wet} cm`;
+                document.getElementById("dustbin_no").innerText = `${data.dustbin_no}`;
+                document.getElementById("distance").innerText = `${data.distance} cm`;
                 document.getElementById("battery").innerText = `${data.battery}%`;
 
             } catch (error) {
@@ -102,18 +102,14 @@
     <!-- Dustbin Data Table -->
     <table>
         <tr>
-            <th>Type</th>
+            <th>Dustbin No</th>
             <th>Distance</th>
             <th>Battery</th>
         </tr>
         <tr>
-            <td>Dry Waste</td>
-            <td id="distance-dry">No data</td>  
-            <td rowspan="2" id="battery">No data</td>  <!-- Battery is common for both -->
-        </tr>
-        <tr>
-            <td>Wet Waste</td>
-            <td id="distance-wet">No data</td>  
+            <td id="dustbin_no">No data</td>  
+            <td id="distance">No data</td>  
+            <td id="battery">No data</td>  
         </tr>
     </table>
 
