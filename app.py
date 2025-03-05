@@ -38,8 +38,8 @@ def get_data():
     # ✅ Format the response
     latest_data = {
         "dustbin_no": latest_entry.get("dustbin_no", "No data"),
-        "distance": latest_entry.get("distance", "No data"),
-        "battery": latest_entry.get("battery", "No data")
+    
+        "percentage": latest_entry.get("percentage", "No data")
     }
 
     return jsonify(latest_data)  # Return latest sensor data

@@ -75,8 +75,8 @@
 
                 // ✅ Update table with latest values
                 document.getElementById("dustbin_no").innerText = `${data.dustbin_no}`;
-                document.getElementById("distance").innerText = `${data.distance} cm`;
-                document.getElementById("battery").innerText = `${data.battery}%`;
+               
+                document.getElementById("percentage").innerText = `${data.percentage}%`;
 
             } catch (error) {
                 console.error("Error fetching from Flask:", error);
@@ -102,13 +102,12 @@
     <!-- Dustbin Data Table -->
     <table>
         <tr>
-            <th>Distance</th>
-            <th>Battery</th>
+            <th>Dustbin_no</th>
+            <th>Percentage</th>
         </tr>
         <tr>
             <td id="dustbin_no">No data</td>
-            <td id="distance">No data</td>  
-            <td rowspan="2" id="battery">No data</td>  <!-- Battery is common for both -->
+            <td rowspan="2" id="percentage">No data</td>  <!-- Battery is common for both -->
         </tr>
             
    </table>
