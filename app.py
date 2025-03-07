@@ -31,7 +31,7 @@ def get_data():
     if not data:
         return jsonify({"error": "No data found"}), 404  # Handle empty database
 
-    dustbins_to_fetch = ["32", "35"]  # Only fetch these two dustbins
+    dustbins_to_fetch = ["32", "35", "36"]  # Only fetch these two dustbins
     latest_data = {}
 
     # ✅ Extract latest entry for dustbin 32 & 35

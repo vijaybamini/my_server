@@ -54,7 +54,7 @@
 
                 // ✅ Update table values for dustbin 35
                 document.getElementById("dustbin_35").innerText = data["35"] ? `${data["35"].percentage}%` : "No data";
-
+                document.getElementById("dustbin_36").innerText = data["36"] ? `${data["36"].percentage}%` : "No data";
             } catch (error) {
                 console.error("Error fetching from Flask:", error);
             }
@@ -83,6 +83,10 @@
         <tr>
             <td>35</td>
             <td id="dustbin_35">Loading...</td>
+        </tr>
+        <tr>
+            <td>36</td>
+            <td id="dustbin_36">Loading...</td>
         </tr>
     </table>
 
