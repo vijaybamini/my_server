@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Dustbin Monitor</title>
+    <title>Smart Dustbin Monitor</title> 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script> 
+    <script src="https://kit.fontawesome.com/6480b39f05.js" crossorigin="anonymous"></script>
+
 
     <style>
         /* General Styling */
@@ -26,13 +32,14 @@
         }
         /* Table Styling */
         table {
-            width: 80%;
+            width: 80vw;
             max-width: 600px;
             border-collapse: collapse;
             background-color: white;
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
             border-radius: 8px;
-            overflow: hidden;
+            overflow: hidden; 
+            margin-top:30vh
         }
         th, td {
             padding: 12px 20px;
@@ -106,7 +113,7 @@
     <div >
 
    
-        <h1>DUSTBIN MONITORING SYTEM</h1> 
+        <h1>DUSTBIN MONITORING SYSTEM</h1> 
         <div class="mainbody">
             <div class="horizontal">
                 <a href="https://dustbinmonitor.onrender.com/"><div class="box"> Data </div></a>
@@ -114,25 +121,30 @@
             
             </div>
     
-            <!-- Dustbin Data Table -->
-            <table>
-                <tr>
-                    <th>Dustbin No</th>
-                    <th>Percentage</th>
-                </tr>
-                <tr>
-                    <td>32</td>
-                    <td id="dustbin_32">Loading...</td>
-                </tr>
-                <tr>
-                    <td>35</td>
-                    <td id="dustbin_35">80%</td>
-                </tr>
-                <tr>
-                    <td>36</td>
-                    <td id="dustbin_36">20%</td>
-                </tr>
-            </table>
+            <!-- Dustbin Data Table --> 
+            <div class="tablew">
+
+            
+                <table>
+                    <tr>
+                        <th>Dustbin No</th>
+                        <th>Percentage</th>
+                    </tr>
+                    <tr>
+                        <td>32</td>
+                        <td id="dustbin_32">Loading...</td>
+                    </tr>
+                    <tr>
+                        <td>35</td>
+                        <td id="dustbin_35">80%</td>
+                    </tr>
+                    <tr>
+                        <td>36</td>
+                        <td id="dustbin_36">20%</td>
+                    </tr>
+                </table>
+            </div>
+            
         </div>
         
     </div>
