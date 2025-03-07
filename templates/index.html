@@ -7,15 +7,23 @@
 
     <style>
         /* General Styling */
-        body {
+        .mainbody {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 30px;
+           
+            height:100vh;
+            
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: center; 
+            background-image:url('/static/nitwimg.png');
+            background-size:cover; 
+            background-position:center;
         }
-
+        h1{
+            text-align:center;
+            font-family:'Sans-serif'; 
+            background-color:#6495ED; 
+        }
         /* Table Styling */
         table {
             width: 80%;
@@ -94,34 +102,39 @@
     </script>
 
 </head>
-<body>
-    <img src="/static/Nitw_logo.png" height="60" width="250" style="align-self: flex-start;">
-    <h1>DUSTBIN MONITORING SYTEM</h1>
-    <div class="horizontal">
-        <a href="https://dustbinmonitor.onrender.com/"><div class="box"> Data </div></a>
-       <a href="https://maper-9sth.onrender.com"><div class="box"> Maps </div></a>
-      
+<body >
+    <div >
+
+   
+        <h1>DUSTBIN MONITORING SYTEM</h1> 
+        <div class="mainbody">
+            <div class="horizontal">
+                <a href="https://dustbinmonitor.onrender.com/"><div class="box"> Data </div></a>
+            <a href="https://maper-9sth.onrender.com"><div class="box"> Maps </div></a>
+            
+            </div>
+    
+            <!-- Dustbin Data Table -->
+            <table>
+                <tr>
+                    <th>Dustbin No</th>
+                    <th>Percentage</th>
+                </tr>
+                <tr>
+                    <td>32</td>
+                    <td id="dustbin_32">Loading...</td>
+                </tr>
+                <tr>
+                    <td>35</td>
+                    <td id="dustbin_35">80%</td>
+                </tr>
+                <tr>
+                    <td>36</td>
+                    <td id="dustbin_36">20%</td>
+                </tr>
+            </table>
+        </div>
+        
     </div>
-
-    <!-- Dustbin Data Table -->
-    <table>
-        <tr>
-            <th>Dustbin No</th>
-            <th>Percentage</th>
-        </tr>
-        <tr>
-            <td>32</td>
-            <td id="dustbin_32">Loading...</td>
-        </tr>
-        <tr>
-            <td>35</td>
-            <td id="dustbin_35">80%</td>
-        </tr>
-        <tr>
-            <td>36</td>
-            <td id="dustbin_36">20%</td>
-        </tr>
-    </table>
-
 </body>
 </html>
