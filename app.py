@@ -24,24 +24,29 @@ def index():
 
 @app.route("/get-data")
 def get_data():
-    """Fetches the latest sensor values."""
+    """Fetches the latest sensor values for only two dustbins (32 & 35)."""
     ref = db.reference("data")  # Reference to "data" node
     data = ref.get()
 
     if not data:
         return jsonify({"error": "No data found"}), 404  # Handle empty database
 
-    # ✅ Get the latest timestamp (highest key)
-    latest_timestamp = sorted(data.keys(), reverse=True)[0]  # Get the latest entry
-    latest_entry = data[latest_timestamp]
+    dustbins_to_fetch = ["32", "35"]  # Only fetch these two dustbins
+    latest_data = {}
 
-    # ✅ Format the response
-    latest_data = {
-        "dustbin_no": latest_entry.get("dustbin_no", "No data"),
-        "percentage": latest_entry.get("percentage", "No data")
-    }
+    # ✅ Extract latest entry for dustbin 32 & 35
+    for dustbin_id in dustbins_to_fetch:
+        dustbin_entries = data.get(dustbin_id, {})  # Get dustbin entries
+        if isinstance(dustbin_entries, dict) and dustbin_entries:
+            latest_entry_key = max(dustbin_entries.keys())  # Get latest timestamp
+            latest_entry = dustbin_entries[latest_entry_key]
 
-    return jsonify(latest_data)  # Return latest sensor data
+            latest_data[dustbin_id] = {
+                "dustbin_no": latest_entry.get("dustbin_no", dustbin_id),
+                "percentage": latest_entry.get("percentage", "No data")
+            }
+
+    return jsonify(latest_data)  # Returns only two dustbins
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
