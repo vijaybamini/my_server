@@ -24,29 +24,37 @@ def index():
 
 @app.route("/get-data")
 def get_data():
-    """Fetches the latest sensor values for only two dustbins (32 & 35)."""
+    """Fetches the latest sensor values for three dustbins (32, 35, 36)."""
     ref = db.reference("data")  # Reference to "data" node
     data = ref.get()
 
     if not data:
         return jsonify({"error": "No data found"}), 404  # Handle empty database
 
-    dustbins_to_fetch = ["32", "35", "36"]  # Only fetch these two dustbins
+    dustbins_to_fetch = ["32", "35", "36"]  # Only fetch these dustbins
     latest_data = {}
 
-    # ✅ Extract latest entry for dustbin 32 & 35
+    # ✅ Extract latest entry for each dustbin
     for dustbin_id in dustbins_to_fetch:
         dustbin_entries = data.get(dustbin_id, {})  # Get dustbin entries
         if isinstance(dustbin_entries, dict) and dustbin_entries:
             latest_entry_key = max(dustbin_entries.keys())  # Get latest timestamp
             latest_entry = dustbin_entries[latest_entry_key]
 
+            # Get percentage and apply the new condition
+            percentage = latest_entry.get("percentage", "No data")
+            if isinstance(percentage, (int, float)):  # Ensure it's a number
+                if percentage > 100 or percentage < 0:  
+                    percentage = 100  # If out of range, set to 100
+            else:
+                percentage = "No data"  # If data is invalid
+
             latest_data[dustbin_id] = {
                 "dustbin_no": latest_entry.get("dustbin_no", dustbin_id),
-                "percentage": latest_entry.get("percentage", "No data")
+                "percentage": percentage  # Send modified percentage
             }
 
-    return jsonify(latest_data)  # Returns only two dustbins
+    return jsonify(latest_data)  # Returns data for three dustbins
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

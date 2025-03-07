@@ -41,6 +41,28 @@
         tr:hover {
             background-color: #f1f1f1;
         }
+        .horizontal {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .box {
+           
+            background-color: #fff;
+            color: black;
+            font-weight: bold;
+            display: flex;
+            width: 120px;
+            height: 40px;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+        .box:hover {
+            background-color: #ddd;
+        }
     </style>
 
     <script>
@@ -69,6 +91,10 @@
 
 </head>
 <body>
+    <div class="horizontal">
+        <div class="box"> Data </div>
+        <div class="box"> Maps </div>
+    </div>
 
     <!-- Dustbin Data Table -->
     <table>
@@ -82,11 +108,11 @@
         </tr>
         <tr>
             <td>35</td>
-            <td id="dustbin_35">Loading...</td>
+            <td id="dustbin_35">80%</td>
         </tr>
         <tr>
             <td>36</td>
-            <td id="dustbin_36">Loading...</td>
+            <td id="dustbin_36">20%</td>
         </tr>
     </table>
 
